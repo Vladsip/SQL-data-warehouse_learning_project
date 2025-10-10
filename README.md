@@ -2,9 +2,9 @@
 
 Welcome to My SQL Server Data Warehouse Project
 
-This project is a simple and practical example of building a data warehouse using Microsoft SQL Server. It covers the basics of collecting data, cleaning it, and organizing it into useful tables for reporting and analysis. Whether you're just starting with data engineering or want to explore SQL Server tools like SQL Server Management Studio SSMS and SSIS, this project shows how to turn raw data into insights.
-
+This project is a simple and practical example of building a data warehouse using Microsoft SQL Server. It covers the basics of collecting data, cleaning it, and organizing it into useful tables for reporting and analysis. 
 # Project Requirements
+
 ### Data Engineering – Building the Data Warehouse
 
 ### Objective 
