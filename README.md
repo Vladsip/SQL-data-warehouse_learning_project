@@ -78,7 +78,7 @@ The data warehouse follows the **Medallion Architecture** pattern:
 🎯 Optimized for Power BI consumption  
 
 You can visualise the structure in the diagram below *(insert your Draw.io ERD here)*.  
-![Warehouse_Architecture](docs/Warehouse Architecture.png)
+![Warehouse_Architecture](docs/Warehouse_Architecture.png)
 
 ---
 
