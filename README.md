@@ -50,15 +50,15 @@ The data warehouse follows the **Medallion Architecture** pattern:
 **Purpose:** Clean, validate, and standardize data for consistency
 **Transformations Applied:**  
 
-✂️ Trimming whitespace from string fields  
-📏 Standardizing categorical values (marital_status, gender, country, product_line)  
-📅 Date validation, formatting, and conversion  
-🔑 Removing duplicate records  
-❌ Handling NULL values appropriately  
-🔄 Data type conversions and casting  
-✅ Business rule validations (e.g., sales = quantity × price)  
-📊 Data enrichment (e.g., calculating end dates using LEAD function)  
-🔤 Value mapping (e.g., 'M' → 'Mountain', 'R' → 'Road')  
+- Trimming whitespace from string fields  
+- Standardizing categorical values (marital_status, gender, country, product_line)  
+- Date validation, formatting, and conversion  
+- Removing duplicate records  
+- Handling NULL values appropriately  
+- Data type conversions and casting  
+- Business rule validations (e.g., sales = quantity × price)  
+- Data enrichment (e.g., calculating end dates using LEAD function)  
+- Value mapping (e.g., 'M' → 'Mountain', 'R' → 'Road')  
 
 
 **Implementation:** Physical tables  
@@ -71,11 +71,11 @@ The data warehouse follows the **Medallion Architecture** pattern:
 **Implementation:** Views (created on top of Silver layer)  
 **Features:**  
 
-🔑 Surrogate keys generated using ROW_NUMBER() function  
-📊 Denormalized structure for query performance  
-🏷️ Business-friendly column names  
-🔗 Referential integrity validated  
-🎯 Optimized for Power BI consumption  
+- Surrogate keys generated using ROW_NUMBER() function  
+- Denormalized structure for query performance  
+- Business-friendly column names  
+- Referential integrity validated  
+- Optimized for Power BI consumption  
 
 You can visualise the structure in the diagram below.  
 ![Warehouse_Architecture](docs/Warehouse_Architecture.png)
@@ -91,6 +91,9 @@ You can visualise the structure in the diagram below.
    - Create surrogate keys  
 3. **Load** – Gold layer aggregates data into fact and dimension tables for analytical use.
 
+![Warehouse_Architecture](docs/Data_Flow_Diagram.png)
+
+
 ## 🧩 Data Model (Star Schema)
 
 The Gold layer follows a Star Schema structure consisting of:
@@ -100,31 +103,39 @@ This schema enables efficient analytical queries and reporting in BI tools.
 
 ![Warehouse_Architecture](docs/Data_Model.png)
 
-## 🧮 Sample SQL Queries
-
-### Total Sales by Country
+## Key Design Decisions  
+### Surrogate Key Generation
 ```sql
-SELECT 
-    c.country,
-    SUM(f.total_amount) AS total_sales
-FROM gold.fact_sales AS f
-JOIN gold.dim_customers AS c
-    ON f.customer_id = c.customer_id
-GROUP BY c.country
-ORDER BY total_sales DESC;
+-- Example: Creating surrogate keys using ROW_NUMBER()
+ROW_NUMBER() OVER (ORDER BY customer_id) AS customer_key
 ```
+### Views vs Tables in Gold Layer  
 
-### Monthly Revenue Trend
-```sql
-SELECT 
-    d.year,
-    d.month_name,
-    SUM(f.total_amount) AS monthly_revenue
-FROM gold.fact_sales AS f
-JOIN gold.dim_dates AS d
-    ON f.date_id = d.date_id
-GROUP BY d.year, d.month_name
-ORDER BY d.year, d.month_number;
-```
+Gold layer uses views rather than physical tables.  
+**Benefits:**
 
+  - Always reflects current Silver layer data  
+  - No need for separate Gold ETL procedure  
+  - Simplified maintenance  
+  - Reduced storage requirements  
+  - Real-time data availability  
+
+### Table Relationships:
+
+One-to-Many: dim_products (1) → fact_sales (*)  
+One-to-Many: dim_customers (1) → fact_sales (*)
+
+## 🚀 Next Steps  
+
+The next stage of this learning project will include:  
+
+Building a Power BI dashboard connected to the Gold layer  
+
+Performing business analysis and generating insights from sales performance data  
+
+## 👤 Author & Credits
+
+Author: Vladimír Šíp  
+Based on learning project by: Data with Baraa  
+Purpose: Educational project for practicing SQL, data modeling, and ETL concepts.  
 
