@@ -77,7 +77,7 @@ The data warehouse follows the **Medallion Architecture** pattern:
 🔗 Referential integrity validated  
 🎯 Optimized for Power BI consumption  
 
-You can visualise the structure in the diagram below *(insert your Draw.io ERD here)*.  
+You can visualise the structure in the diagram below.  
 ![Warehouse_Architecture](docs/Warehouse_Architecture.png)
 
 ---
@@ -98,7 +98,7 @@ The Gold layer follows a Star Schema structure consisting of:
 - **Dimension Tables:** dim_customers, dim_products
 This schema enables efficient analytical queries and reporting in BI tools.
 
-(Insert Draw.io data model diagram here)
+![Warehouse_Architecture](docs/Data_Model.png)
 
 ## 🧮 Sample SQL Queries
 
